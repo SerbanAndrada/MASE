@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import Vue from 'vue';
 import Vuex from 'vuex';
 import firebase from 'firebase';
@@ -8,16 +9,26 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         user: null,
-        isAuthenticated: false
+        isAuthenticated: false,
+        categories: ['Public saftey', 'Violation of the law ', 'Other'],
+        complaints: []
     },
+
     mutations: {
         setUser(state, payload) {
             state.user = payload;
         },
         setIsAuthenticated(state, payload) {
             state.isAuthenticated = payload;
+        },
+        getComplaints(state, complaint) {
+            state.complaints.push(complaint);
+        },
+        clearComplaints(state) {
+            state.complaints = [];
         }
     },
+
     actions: {
         userLogin({ commit }, { email, password }) {
             firebase
@@ -62,6 +73,41 @@ export default new Vuex.Store({
                     commit('setUser', null);
                     commit('setIsAuthenticated', false);
                     router.push('/');
+                });
+        },
+        getAllComplaints({ commit }) {
+            commit('clearComplaints');
+            firebase
+                .firestore()
+                .collection('complaints')
+                .get()
+                .then(function(querySnapshot) {
+                    querySnapshot.forEach(function(doc) {
+                        var completeComplaint = doc.data();
+                        completeComplaint.complaintId = doc.id;
+                        commit('getComplaints', completeComplaint);
+                    });
+                });
+        },
+        addComplaint({ commit }, newComplaint) {
+            firebase
+                .firestore()
+                .collection('complaints')
+                .add({
+                    title: newComplaint.title,
+                    description: newComplaint.description,
+                    category: newComplaint.category,
+                    image: newComplaint.image,
+                    status: newComplaint.status,
+                    userId: newComplaint.userId,
+                    date: newComplaint.date
+                })
+                .then(function(docRef) {
+                    console.log('document written with ID: ', docRef.id);
+                })
+                .catch(function(error) {
+                    console.error('Erroradding document: ', error);
+                    commit('setUser', null);
                 });
         }
     },

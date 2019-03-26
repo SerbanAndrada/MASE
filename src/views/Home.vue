@@ -1,8 +1,8 @@
 <template>
-  <span>
-    <HomeIntroduction></HomeIntroduction>
-    <HomeInformations></HomeInformations>
-  </span>
+    <span>
+        <HomeIntroduction></HomeIntroduction>
+        <HomeInformations></HomeInformations>
+    </span>
 </template>
 
 <script>

@@ -6,7 +6,7 @@
           <v-container fluid>
             <v-layout row align-center fill-height>
               <v-flex>
-                <v-container class="imagePlaceholder" v-if="image.length < 1">
+                <v-container class="imagePlaceholder" v-if="newComplaint.image.length < 1">
                   <v-layout column align-center justify-center fill-height>
                     <v-spacer/>
                     <v-flex xs3 class="addImage">
@@ -28,8 +28,8 @@
                   </v-layout>
                 </v-container>
 
-                <v-container v-if="image.length > 0">
-                  <img class="imageSize" :src="image">
+                <v-container v-if="newComplaint.image.length > 0">
+                  <img class="imageSize" :src="newComplaint.image">
                   <v-btn icon class="close-btn">
                     <v-icon light class="icon" v-on:click="deleteImage">close</v-icon>
                   </v-btn>
@@ -46,28 +46,28 @@
                     <v-flex>
                       <v-form ref="form" v-model="valid" lazy-validation>
                         <v-text-field
-                          v-model="title"
-                          :rules="[v => !!v || 'title is required']"
+                          v-model="newComplaint.title"
+                          :rules="[v =>!!v ||'title is required']"
                           :counter="30"
                           label="Title"
                           required
                         ></v-text-field>
                         <v-textarea
-                          v-model="description"
-                          :rules="[v => !!v || 'Description is required']"
+                          v-model="newComplaint.description"
+                          :rules="[v =>!!v ||'Description is required']"
                           label="Description"
                           required
                         ></v-textarea>
                         <v-select
-                          v-model="category"
+                          v-model="newComplaint.category"
                           :items="categories"
-                          :rules="[v => !!v || 'Please select a category']"
+                          :rules="[v =>!!v ||'Please select a category']"
                           label="Category"
                           required
                         ></v-select>
 
                         <v-btn :disabled="!valid" color="primary" v-on:click="submitForm()">submit</v-btn>
-                        <v-btn flat v-on:click="cancelForm()">cancel</v-btn>
+                        <v-btn flat to="/home">cancel</v-btn>
                       </v-form>
                     </v-flex>
                   </v-layout>
@@ -82,36 +82,43 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
+
 export default {
     name: 'ComplaintsAdd',
     data: () => ({
         valid: false,
-        image: '',
-        categories: ['important', 'not important', 'other'],
-        title: '',
-        description: '',
-        category: ''
+        newComplaint: {
+            image: '',
+            title: '',
+            description: '',
+            category: '',
+            userId: '',
+            status: 'Submited',
+            date: ''
+        }
     }),
+    computed: {
+        ...mapState(['user', 'categories'])
+    },
     methods: {
+        ...mapActions(['addComplaint']),
         loadImage: function(event) {
             var input = event.target;
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 reader.onload = e => {
-                    this.image = e.target.result;
+                    this.newComplaint.image = e.target.result;
                 };
                 reader.readAsDataURL(input.files[0]);
             }
         },
         deleteImage() {
-            this.image = '';
-        },
-        cancelForm() {
-            this.image = '';
-            this.title = '';
-            this.description = '';
+            this.newComplaint.image = '';
         },
         submitForm() {
+            this.newComplaint.date = new Date().toLocaleDateString();
+            this.addComplaint(this.newComplaint);
         }
     }
 };

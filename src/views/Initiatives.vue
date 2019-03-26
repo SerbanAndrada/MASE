@@ -1,11 +1,11 @@
 <template>
-  <v-content class="background-image">
-    <InitiativeAdd/>
-  </v-content>
+    <v-content class="background-image">
+        <InitiativeAdd />
+    </v-content>
 </template>
 
 <script>
-import InitiativeAdd from '@/components/InitiativeAdd.vue'
+import InitiativeAdd from '@/components/InitiativeAdd.vue';
 export default {
     components: {
         InitiativeAdd
@@ -13,5 +13,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -1,13 +1,12 @@
 <template>
-   <v-content class="background-image">
-       <router-view></router-view>
-   </v-content>
+    <v-content class="background-image">
+        <router-view></router-view>
+    </v-content>
 </template>
 
 <script>
 export default {
-    components: {
-    }
+    components: {}
 };
 </script>
 
@@ -19,4 +18,3 @@ export default {
     height: 100%;
 }
 </style>
-
