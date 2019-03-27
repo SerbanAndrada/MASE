@@ -11,7 +11,8 @@ export default new Vuex.Store({
         user: null,
         isAuthenticated: false,
         categories: ['Public saftey', 'Violation of the law ', 'Other'],
-        complaints: []
+        complaints: [],
+        initiatives: []
     },
 
     mutations: {
@@ -89,7 +90,7 @@ export default new Vuex.Store({
                     });
                 });
         },
-        addComplaint({ commit }, newComplaint) {
+        addComplaint({ dispatch }, newComplaint) {
             firebase
                 .firestore()
                 .collection('complaints')
@@ -107,8 +108,42 @@ export default new Vuex.Store({
                 })
                 .catch(function(error) {
                     console.error('Erroradding document: ', error);
-                    commit('setUser', null);
+                    dispatch('setUser', null);
                 });
+        },
+        addInitiative({ dispatch }, newInitiative) {
+            var initiativeId = '';
+
+            firebase
+                .firestore()
+                .collection('initiatives')
+                .add({
+                    title: newInitiative.title,
+                    description: newInitiative.description,
+                    startDate: newInitiative.startDate,
+                    endDate: newInitiative.endDate,
+                    budget: newInitiative.budget,
+                    location: newInitiative.location,
+                    poolSwitch: newInitiative.poolSwitch,
+                    poolOptions: newInitiative.poolOptions,
+                    images: newInitiative.images
+                })
+                .then(function(docRef) {
+                    initiativeId = docRef.id;
+                    console.log('document written with ID: ', docRef.id);
+                })
+                .catch(function(error) {
+                    console.error('Erroradding document: ', error);
+                    dispatch('setUser', null);
+                });
+
+            if (newInitiative.poolSwitch == true) {
+                firebase
+                    .firestore()
+                    .collection('pools')
+                    .doc(initiativeId)
+                    .set({});
+            }
         }
     },
     getters: {
