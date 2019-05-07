@@ -119,7 +119,7 @@
                 </v-layout>
 
                 <v-text-field 
-                type="number"
+                  type="number"
                   v-model="newInitiative.budget"
                   :rules="[v => !!v || 'Budget is required']"
                   label="Budget"
@@ -227,8 +227,8 @@ export default {
         endDateMenu: false,
 
         newInitiative: {
-            title: 'title',
-            description: 'description',
+            title: '',
+            description: '',
             startDate: '',
             endDate: '',
             budget: '',
@@ -253,13 +253,16 @@ export default {
             ];
         },
         loadImages: function(event) {
-            var input = event.target;
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = e => {
+            var files = event.target.files;
+            var n = files.length;
+            var i;
+            for(i=0; i<n; i++){
+              var reader = new FileReader();
+                  reader.onload = e => {
                     this.newInitiative.images.push(e.target.result);
-                };
-                reader.readAsDataURL(input.files[0]);
+                  };
+                  reader.readAsDataURL(files[i]);
+                  
             }
         },
         deleteImages: function(){

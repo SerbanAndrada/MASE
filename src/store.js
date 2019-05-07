@@ -36,7 +36,7 @@ export default new Vuex.Store({
                 .auth()
                 .signInWithEmailAndPassword(email, password)
                 .then(user => {
-                    commit('setUser', user);
+                    commit('setUser', user.uid);
                     commit('setIsAuthenticated', true);
                     router.push('/home');
                 })
@@ -46,11 +46,12 @@ export default new Vuex.Store({
                     router.push('/');
                 });
         },
-        userRegister({ commit }, { email, password }) {
+        userRegister({ commit }, newUser) {
             firebase
                 .auth()
-                .createUserWithEmailAndPassword(email, password)
+                .createUserWithEmailAndPassword(newUser.email, newUser.password)
                 .then(user => {
+                    console.log(user);
                     commit('setUser', user);
                     commit('setIsAuthenticated', true);
                     router.push('/home');
