@@ -1,0 +1,106 @@
+
+Table Adresa {
+  AdresaId int [pk]
+  Tara varchar
+  Judet varchar 
+  Oras varchar
+  Strada varchar
+  Numar int
+  Bloc varchar
+  Apartament int
+}
+
+Table Utilizatori {
+  UtilizatorId int [pk]
+  Username varchar [not null, unique]
+  Parola varchar
+  Nume varchar [not null, unique]
+  Prenume varchar
+  Adresa1 varchar [ref: > Adresa.AdresaId]
+  Adresa2 varchar [ref: > Adresa.AdresaId]
+  Telefon varchar
+  Email varchar
+  
+}
+
+Table Favorite {
+  ProductId int [ref: > Produse.ProdusId]
+  UtilizatorId int [ref: > Utilizatori.UtilizatorId]
+}
+
+Table Recenzii {
+  RecenzieId in [pk]
+  ProductId int [ref: > Produse.ProdusId]
+  UtilizatorId int [ref: > Utilizatori.UtilizatorId]
+  Text varchar
+  Nota int
+}
+
+
+Table Livrari {
+  LivrareId int [pk]
+  NumeCompanie varchar 
+  Telefon varchar
+  AWB varchar
+  DataLivrare datetime
+}
+
+Table Plati {
+  PlataId int [pk]
+  Tip varchar
+}
+
+Table Comenzi {
+  ComandaId int [pk]
+  UtilizatorId int [ref: > Utilizatori.UtilizatorId]
+  Numar varchar
+  Status varchar
+  AdresaId int [ref: > Adresa.AdresaId]
+  Data datetime
+  LivrareId int [ref: > Livrari.LivrareId]
+  PlataId int [ref: > Plati.PlataId]
+  Achitat boolean
+  Mesaj varchar
+  PretTotal int
+}
+
+Table DetaliiComanda {
+  DetaliiComandaId int [pk]
+  ProdusId int [ref: > Produse.ProdusId]
+  ComandaId int [ref: > Comenzi.ComandaId]
+  Cantitate int
+  Pret int
+}
+
+Table Categorii {
+  CategorieId int [pk]
+  Nume varchar
+  Descriere varchar
+}
+
+Table Produse {
+  ProdusId int [pk]
+  Nume varchar
+  Descriere varchar
+  Detalii varchar
+  Culoare varchar
+  Dimensiune varchar
+  Reducere int
+  Nota int
+  Stoc int
+  ProducatorId int [ref: > Producatori.ProducatorId]
+  CategorieId int [ref: > Categorii.CategorieId]
+}
+
+Table Imagini {
+  ImagineId int [pk]
+  Imagine varchar
+  ProdusId int [ref: > Produse.ProdusId]
+}
+
+Table Producatori {
+  ProducatorId int [pk]
+  Companie varchar
+  Telefon varchar
+  Email varchar
+}
