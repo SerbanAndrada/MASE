@@ -1,5 +1,5 @@
 <template>
-    <v-content class="background-image">
+    <v-content class="background-image ">
         <InitiativeAdd />
     </v-content>
 </template>

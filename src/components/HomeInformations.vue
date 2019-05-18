@@ -1,5 +1,5 @@
 <template>
-    <v-container grid-list-lg>
+    <v-container grid-list-lg class='homeInformation'>
         <v-layout column>
             <v-flex
                 class="display-2 font-weight-black blue--text text-xs-center my-5"
@@ -106,4 +106,8 @@
 export default {};
 </script>
 
-<style></style>
+<style scoped>
+.homeInformation {
+    padding-bottom: 150px;
+}
+</style>

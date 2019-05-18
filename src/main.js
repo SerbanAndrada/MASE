@@ -5,9 +5,10 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import '@/firebase/';
+import VueSVGIcon from 'vue-svgicon'
 
 Vue.config.productionTip = false;
-
+Vue.use(VueSVGIcon);
 new Vue({
     router,
     store,

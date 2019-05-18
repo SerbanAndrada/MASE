@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "generate-icons": "vsvg -s ./svg-icons -t ./src/compiled-icons"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0-rc.1",
@@ -18,6 +19,7 @@
     "vuex": "^3.0.1"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.8.2",
     "@vue/cli-plugin-babel": "^3.5.0",
     "@vue/cli-plugin-eslint": "^3.5.0",
     "@vue/cli-service": "^3.5.0",
@@ -26,6 +28,7 @@
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
     "vue-cli-plugin-vuetify": "^0.5.0",
+    "vue-svgicon": "^3.2.6",
     "vue-template-compiler": "^2.5.21"
   },
   "eslintConfig": {

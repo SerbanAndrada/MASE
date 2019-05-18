@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import store from '@/store.js';
+import ContactUs from './views/ContactUs.vue';
 import Complaints from './views/Complaints.vue';
 import Initiatives from './views/Initiatives.vue';
 import ComplaintsAll from './components/ComplaintsAll.vue';
@@ -28,6 +29,11 @@ const router = new Router({
             path: '/initiatives',
             name: 'initiatives',
             component: Initiatives
+        },
+        {
+            path: '/contact-us',
+            name: 'contact-us',
+            component: ContactUs
         },
         {
             path: '/complaints',
